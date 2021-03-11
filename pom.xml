@@ -32,6 +32,12 @@
             <artifactId>approvaltests</artifactId>
             <version>9.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.2.9.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
