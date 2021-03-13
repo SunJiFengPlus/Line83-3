@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
  */
 @Data
 public abstract class AbstractCard {
-    private String playerName;
     private String cardList;
+    private String playerName;
     private String type;
     private int[] cardNum;
 
-    public AbstractCard(String playerName, String cardList, String type, int[] cardNum) {
-        this.playerName = playerName;
+    public AbstractCard(String cardList, String playerName, String type, int[] cardNum) {
         this.cardList = cardList;
+        this.playerName = playerName;
         this.type = type;
         this.cardNum = cardNum;
     }
@@ -265,15 +265,7 @@ public abstract class AbstractCard {
             winResult = "player2 wins - " + anotherCard.getType();
         } else {
             if (this.getTypeIndex() == 0) {//同花顺
-                if (this.getCardNum()[0] < anotherCard.getCardNum()[0]) {
-                    String sig = map2Card(anotherCard.getCardNum()[0]);
-                    winResult = "player2 wins - high card:" + sig;
-                } else if (this.getCardNum()[0] > anotherCard.getCardNum()[0]) {
-                    String sig = map2Card(this.getCardNum()[0]);
-                    winResult = "player1 wins - high card:" + sig;
-                } else {
-                    winResult = "tie";
-                }
+                winResult = doCompareTo(anotherCard);
             } else if (this.getTypeIndex() == 1) {//铁支
                 if (this.sort()[0] < anotherCard.sort()[0]) {
                     String sig = map2Card(anotherCard.sort()[0]);
@@ -384,6 +376,10 @@ public abstract class AbstractCard {
             }
         }
         return winResult;
+    }
+
+    public String doCompareTo(AbstractCard anotherCard) {
+        return "";
     }
     
 }
