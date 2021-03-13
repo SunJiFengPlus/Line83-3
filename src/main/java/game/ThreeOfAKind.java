@@ -5,7 +5,18 @@ package game;
  * @since 2021/3/13
  */
 public class ThreeOfAKind extends AbstractCard {
-    public ThreeOfAKind(String playerName, String cardList, String type, int[] cardNumList) {
-        super(playerName, cardList, type, cardNumList);
+    public ThreeOfAKind(String cardList, String playerName , String type, int[] cardNumList) {
+        super(cardList, playerName, type, cardNumList);
+    }
+
+    @Override
+    public String doCompareTo(AbstractCard anotherCard) {
+        if (this.noOrRepeatNumber(0)[0] < anotherCard.noOrRepeatNumber(0)[0]) {
+            String sig = map2Card(anotherCard.noOrRepeatNumber(0)[0]);
+            return anotherCard.getPlayerName() + " wins - high card:" + sig;
+        } else {
+            String sig = map2Card(this.noOrRepeatNumber(0)[0]);
+            return this.getPlayerName() + " wins - high card:" + sig;
+        }
     }
 }
