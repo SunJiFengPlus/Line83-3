@@ -18,8 +18,8 @@ public class Poker {
         String[] type = {"StraightFlush", "FourOfAKind", "FullHouse", "Flush", "Straight", "ThreeOfAKind", "TwoPair", "OnePair", "HighCard"};
         int[] player1Number = player1Card.getCardNum();
         int[] player2Number = player2Card.getCardNum();
-        int player1Index = judgeIndex(player1Type);
-        int player2Index = judgeIndex(player2Type);
+        int player1Index = player1Card.getTypeIndex();
+        int player2Index = player2Card.getTypeIndex();
         int[] player1ArraySort = arraySort(player1Number);
         int[] player2ArraySort = arraySort(player2Number);
         int[] player1Repeat = noOrRepeatNumber(player1Number, 0);
