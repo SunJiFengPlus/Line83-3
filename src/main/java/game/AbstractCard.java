@@ -257,38 +257,15 @@ public abstract class AbstractCard {
     }
     
     public String compareTo(AbstractCard anotherCard) {
-        String winResult = "";
-
         if (this.getTypeIndex() < anotherCard.getTypeIndex()) {
-            winResult = "player1 wins - " + this.getType();
+            return this.getPlayerName() + " wins - " + this.getType();
         } else if (this.getTypeIndex() > anotherCard.getTypeIndex()) {
-            winResult = "player2 wins - " + anotherCard.getType();
+            return anotherCard.getPlayerName() + " wins - " + anotherCard.getType();
         } else {
-            if (this.getTypeIndex() == 0) {//同花顺
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 1) {//铁支
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 2) {//葫芦
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 3) {//同花
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 4) {//顺子
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 5) {//三条
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 6) {//两对
-                winResult = doCompareTo(anotherCard);
-            } else if (this.getTypeIndex() == 7) {//对子
-                winResult = doCompareTo(anotherCard);
-            } else {//散牌
-                winResult = doCompareTo(anotherCard);
-            }
+            return doCompareTo(anotherCard);
         }
-        return winResult;
     }
 
-    public String doCompareTo(AbstractCard anotherCard) {
-        return "";
-    }
+    public abstract String doCompareTo(AbstractCard anotherCard);
     
 }
