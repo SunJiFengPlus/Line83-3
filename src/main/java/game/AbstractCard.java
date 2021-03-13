@@ -281,19 +281,7 @@ public abstract class AbstractCard {
             } else if (this.getTypeIndex() == 7) {//对子
                 winResult = doCompareTo(anotherCard);
             } else {//散牌
-                for (int i = 0; i < 5; i++) {
-                    if (this.getCardNum()[i] < anotherCard.getCardNum()[i]) {
-                        String sig = map2Card(anotherCard.getCardNum()[i]);
-                        winResult = "player2 wins - high card:" + sig;
-                        break;
-                    } else if (this.getCardNum()[i] > anotherCard.getCardNum()[i]) {
-                        String sig = map2Card(this.getCardNum()[i]);
-                        winResult = "player1 wins - high card:" + sig;
-                        break;
-                    } else {
-                        winResult = "tie";
-                    }
-                }
+                winResult = doCompareTo(anotherCard);
             }
         }
         return winResult;
