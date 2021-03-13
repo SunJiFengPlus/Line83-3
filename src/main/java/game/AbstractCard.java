@@ -205,4 +205,139 @@ public abstract class AbstractCard {
         }
         return reResult;
     }
+    
+    public String compareTo(AbstractCard anotherCard) {
+        String winResult = "";
+
+        if (this.getTypeIndex() < anotherCard.getTypeIndex()) {
+            winResult = "player1 wins - " + this.getType();
+        } else if (this.getTypeIndex() > anotherCard.getTypeIndex()) {
+            winResult = "player2 wins - " + anotherCard.getType();
+        } else {
+            if (this.getTypeIndex() == 0) {//同花顺
+                if (this.getCardNum()[0] < anotherCard.getCardNum()[0]) {
+                    String sig = intNumber(anotherCard.getCardNum()[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else if (this.getCardNum()[0] > anotherCard.getCardNum()[0]) {
+                    String sig = intNumber(this.getCardNum()[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                } else {
+                    winResult = "tie";
+                }
+            } else if (this.getTypeIndex() == 1) {//铁支
+                if (this.sort()[0] < anotherCard.sort()[0]) {
+                    String sig = intNumber(anotherCard.sort()[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else {
+                    String sig = intNumber(this.sort()[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                }
+            } else if (this.getTypeIndex() == 2) {//葫芦
+                if (this.sort()[0] < anotherCard.sort()[0]) {
+                    String sig = intNumber(anotherCard.sort()[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else {
+                    String sig = intNumber(this.sort()[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                }
+            } else if (this.getTypeIndex() == 3) {//同花
+                for (int i = 0; i < 5; i++) {
+                    if (this.getCardNum()[i] < anotherCard.getCardNum()[i]) {
+                        String sig = intNumber(anotherCard.getCardNum()[i]);
+                        winResult = "player2 wins - high card:" + sig;
+                        break;
+                    } else if (this.getCardNum()[i] > anotherCard.getCardNum()[i]) {
+                        String sig = intNumber(this.getCardNum()[i]);
+                        winResult = "player1 wins - high card:" + sig;
+                        break;
+                    } else {
+                        winResult = "tie";
+                    }
+                }
+            } else if (this.getTypeIndex() == 4) {//顺子
+                if (this.getCardNum()[0] < anotherCard.getCardNum()[0]) {
+                    String sig = intNumber(anotherCard.getCardNum()[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else if (this.getCardNum()[0] > anotherCard.getCardNum()[0]) {
+                    String sig = intNumber(this.getCardNum()[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                } else {
+                    winResult = "tie";
+                }
+            } else if (this.getTypeIndex() == 5) {//三条
+                if (this.noOrRepeatNumber(0)[0] < anotherCard.noOrRepeatNumber(0)[0]) {
+                    String sig = intNumber(anotherCard.noOrRepeatNumber(0)[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else {
+                    String sig = intNumber(this.noOrRepeatNumber(0)[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                }
+            } else if (this.getTypeIndex() == 6) {//两对
+                for (int i = 0; i < 2; i++) {
+                    if (this.noOrRepeatNumber(0)[i] < anotherCard.noOrRepeatNumber(0)[i]) {
+                        String sig = intNumber(anotherCard.noOrRepeatNumber(0)[i]);
+                        winResult = "player2 wins - high card:" + sig;
+                        break;
+                    } else if (this.noOrRepeatNumber(0)[i] > anotherCard.noOrRepeatNumber(0)[i]) {
+                        String sig = intNumber(this.noOrRepeatNumber(0)[i]);
+                        winResult = "player1 wins - high card:" + sig;
+                        break;
+                    }
+                }
+                if (winResult.equals("")) {
+                    if (this.noOrRepeatNumber(1)[0] < anotherCard.noOrRepeatNumber(1)[0]) {
+                        String sig = intNumber(anotherCard.noOrRepeatNumber(1)[0]);
+                        winResult = "player2 wins - high card:" + sig;
+                    } else if (this.noOrRepeatNumber(1)[0] > anotherCard.noOrRepeatNumber(1)[0]) {
+                        String sig = intNumber(this.noOrRepeatNumber(1)[0]);
+                        winResult = "player1 wins - high card:" + sig;
+                    } else {
+                        winResult = "tie";
+                    }
+                }
+            } else if (this.getTypeIndex() == 7) {//对子
+                if (this.noOrRepeatNumber(0)[0] < anotherCard.noOrRepeatNumber(0)[0]) {
+                    String sig = intNumber(anotherCard.noOrRepeatNumber(0)[0]);
+                    winResult = "player2 wins - high card:" + sig;
+                } else if (this.noOrRepeatNumber(0)[0] > anotherCard.noOrRepeatNumber(0)[0]) {
+                    String sig = intNumber(this.noOrRepeatNumber(0)[0]);
+                    winResult = "player1 wins - high card:" + sig;
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        if (this.noOrRepeatNumber(1)[i] < anotherCard.noOrRepeatNumber(1)[i]) {
+                            String sig = intNumber(anotherCard.noOrRepeatNumber(1)[i]);
+                            winResult = "player2 wins - high card:" + sig;
+                            break;
+                        } else if (this.noOrRepeatNumber(1)[i] > anotherCard.noOrRepeatNumber(1)[i]) {
+                            String sig = intNumber(this.noOrRepeatNumber(1)[i]);
+                            winResult = "player1 wins - high card:" + sig;
+                            break;
+                        } else {
+                            winResult = "tie";
+                        }
+                    }
+                }
+            } else {//散牌
+                for (int i = 0; i < 5; i++) {
+                    if (this.getCardNum()[i] < anotherCard.getCardNum()[i]) {
+                        String sig = intNumber(anotherCard.getCardNum()[i]);
+                        winResult = "player2 wins - high card:" + sig;
+                        break;
+                    } else if (this.getCardNum()[i] > anotherCard.getCardNum()[i]) {
+                        String sig = intNumber(this.getCardNum()[i]);
+                        winResult = "player1 wins - high card:" + sig;
+                        break;
+                    } else {
+                        winResult = "tie";
+                    }
+                }
+            }
+        }
+        return winResult;
+    }
+    
+    private String intNumber(int i) {
+        String[] strNumber = {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
+        return strNumber[i - 2];
+    }
 }
