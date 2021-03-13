@@ -35,59 +35,34 @@ public abstract class AbstractCard {
     /**
      * 卡牌点数, 从小到大
      */
-    private static List<String> compareNumList = Arrays.asList("2","3","4","5","6","7","8","9","T","J","Q","K","A");
+    private static List<String> compareNumList = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
 
     public static AbstractCard of(String card, String name) {
-        String judgeType = judgeType(card);
         int[] cardNumList = strNumber(card);
-
-        switch (judgeType) {
-            case "StraightFlush":
+        //判断是什么牌
+        if (isDiff(card, 5)) {
+            if (isStraight(card) && isFlush(card)) {//五个相邻的数字且花色一样——同花顺
                 return new StraightFlush(card, name, "StraightFlush", cardNumList);
-            case "Straight":
+            } else if (isStraight(card)) {//五个相邻数字——顺子
                 return new Straight(card, name, "Straight", cardNumList);
-            case "Flush":
+            } else if (isFlush(card)) {//同一花色——同花
                 return new Flush(card, name, "Flush", cardNumList);
-            case "HighCard":
-                return new HighCard(card, name, "HighCard", cardNumList);
-            case "OnePair":
-                return new OnePair(card, name, "OnePair", cardNumList);
-            case "TwoPair":
-                return new TwoPair(card, name, "TwoPair", cardNumList);
-            case "ThreeOfAKind":
-                return new ThreeOfAKind(card, name, "ThreeOfAKind", cardNumList);
-            case "FourOfAKind":
-                return new FourOfAKind(card, name, "FourOfAKind", cardNumList);
-            case "FullHouse":
-                return new FullHouse(card, name, "FullHouse", cardNumList);
-        }
-        throw new IllegalArgumentException(card);
-    }
-
-    private static String judgeType(String str) {//判断是什么牌
-        if (isDiff(str, 5)) {
-            if (isStraight(str) && isFlush(str)) {//五个相邻的数字且花色一样——同花顺
-                return  "StraightFlush";
-            } else if (isStraight(str)) {//五个相邻数字——顺子
-                return  "Straight";
-            } else if (isFlush(str)) {//同一花色——同花
-                return  "Flush";
             } else {//五个不相邻的数字——散牌
-                return  "HighCard";
+                return new HighCard(card, name, "HighCard", cardNumList);
             }
-        } else if (isDiff(str, 4)) {//一对相同，其余三个数字不同——对子
-            return  "OnePair";
-        } else if (isDiff(str, 3)) {
-            if (maxCardIs(str, 2)) {//两对
-                return  "TwoPair";
+        } else if (isDiff(card, 4)) {//一对相同，其余三个数字不同——对子
+            return new OnePair(card, name, "OnePair", cardNumList);
+        } else if (isDiff(card, 3)) {
+            if (maxCardIs(card, 2)) {//两对
+                return new TwoPair(card, name, "TwoPair", cardNumList);
             } else {//三个数字相同，另外两个数字不同——三条
-                return  "ThreeOfAKind";
+                return new ThreeOfAKind(card, name, "ThreeOfAKind", cardNumList);
             }
         } else {
-            if (maxCardIs(str, 4)) {//四个数字相同——铁支
-                return  "FourOfAKind";
+            if (maxCardIs(card, 4)) {//四个数字相同——铁支
+                return new FourOfAKind(card, name, "FourOfAKind", cardNumList);
             } else {//三个数字相同，另外两个数字相同——葫芦
-                return  "FullHouse";
+                return new FullHouse(card, name, "FullHouse", cardNumList);
             }
         }
     }
@@ -141,7 +116,7 @@ public abstract class AbstractCard {
     }
 
     protected String map2Card(int i) {
-        return compareNumList.get(i - 2) ;
+        return compareNumList.get(i - 2);
     }
 
     private static int[] strNumber(String str) {//数字转化并将其从大到小排序
@@ -255,7 +230,7 @@ public abstract class AbstractCard {
         }
         return reResult;
     }
-    
+
     public String compareTo(AbstractCard anotherCard) {
         if (this.getTypeIndex() < anotherCard.getTypeIndex()) {
             return this.getPlayerName() + " wins - " + this.getType();
@@ -267,5 +242,5 @@ public abstract class AbstractCard {
     }
 
     public abstract String doCompareTo(AbstractCard anotherCard);
-    
+
 }
