@@ -93,7 +93,7 @@ public class Poker {
                         String sig = intNumber(player2Repeat[i]);
                         winResult = "player2 wins - high card:" + sig;
                         break;
-                    } else if (player1Repeat[i] > player2NoRepeat[i]) {
+                    } else if (player1Repeat[i] > player2Repeat[i]) {
                         String sig = intNumber(player1Repeat[i]);
                         winResult = "player1 wins - high card:" + sig;
                         break;
