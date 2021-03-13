@@ -13,7 +13,6 @@ public class Poker {
         AbstractCard player1Card = AbstractCard.of(player1, "player1");
         AbstractCard player2Card = AbstractCard.of(player2, "player2");
 
-        String[] type = {"StraightFlush", "FourOfAKind", "FullHouse", "Flush", "Straight", "ThreeOfAKind", "TwoPair", "OnePair", "HighCard"};
         int[] player1Number = player1Card.getCardNum();
         int[] player2Number = player2Card.getCardNum();
         int player1Index = player1Card.getTypeIndex();
@@ -26,9 +25,9 @@ public class Poker {
         int[] player2NoRepeat = player2Card.noOrRepeatNumber(1);
 
         if (player1Index < player2Index) {
-            winResult = "player1 wins - " + type[player1Index];
+            winResult = "player1 wins - " + player1Card.getType();
         } else if (player1Index > player2Index) {
-            winResult = "player2 wins - " + type[player2Index];
+            winResult = "player2 wins - " + player2Card.getType();
         } else {
             if (player1Index == 0) {//同花顺
                 if (player1Number[0] < player2Number[0]) {
