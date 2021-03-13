@@ -156,4 +156,53 @@ public abstract class AbstractCard {
         }
         return arrayresult;
     }
+
+    public int[] noOrRepeatNumber(int flag) {//先获得数组中每个元素出现的次数，然后再进行计算出现次数大于1的和出现次数等于1的
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int j : cardNum) {
+            map.merge(j, 1, Integer::sum);
+        }
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((arg0, arg1) -> arg1.getValue().compareTo(arg0.getValue()));
+        int[] repeatnumber = new int[list.size()];
+        int[] norepeatnumber = new int[list.size()];
+        int i = 0;
+        if (flag == 0) {
+            for (Map.Entry<Integer, Integer> entry : list) {
+                if (entry.getValue() > 1) {
+                    repeatnumber[i] = entry.getKey();
+                    i++;
+                }
+            }
+        } else {
+            for (Map.Entry<Integer, Integer> entry : list) {
+                if (entry.getValue() == 1) {
+                    norepeatnumber[i] = entry.getKey();
+                    i++;
+                }
+            }
+        }
+        HashSet<Integer> hashSet = new HashSet<>();
+        if (flag == 0) {
+            for (i = 0; i < repeatnumber.length; i++) {
+                hashSet.add(repeatnumber[i]);
+            }
+        } else {
+            for (i = 0; i < norepeatnumber.length; i++) {
+                hashSet.add(norepeatnumber[i]);
+            }
+        }
+        hashSet.remove(0);
+        int[] result = new int[hashSet.size()];
+        i = 0;
+        for (Integer integer : hashSet) {
+            result[i] = integer;
+            i++;
+        }
+        int[] reResult = new int[result.length];
+        for (i = 0; i < result.length; i++) {
+            reResult[i] = result[result.length - i - 1];
+        }
+        return reResult;
+    }
 }
