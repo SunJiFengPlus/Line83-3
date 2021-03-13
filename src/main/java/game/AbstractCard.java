@@ -1,26 +1,41 @@
 package game;
 
-import lombok.AllArgsConstructor;
+import com.google.common.collect.HashMultiset;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author 孙继峰
  * @since 2021/3/13
  */
 @Data
-@AllArgsConstructor
 public abstract class AbstractCard {
     private String playerName;
     private String cardList;
     private String type;
     private int[] cardNum;
+
+    public AbstractCard(String playerName, String cardList, String type, int[] cardNum) {
+        this.playerName = playerName;
+        this.cardList = cardList;
+        this.type = type;
+        this.cardNum = cardNum;
+    }
+
+    /**
+     * 卡牌点数, 从小到大
+     */
+    private static List<String> compareNumList = Arrays.asList("2","3","4","5","6","7","8","9","T","J","Q","K","A");
 
     public static AbstractCard of(String card, String name) {
         String judgeType = judgeType(card);
@@ -50,48 +65,79 @@ public abstract class AbstractCard {
     }
 
     private static String judgeType(String str) {//判断是什么牌
-        String type;
-        String[] strArray = str.split("");
-        int[] number = strNumber(str);
-        int i;
-        String[] color = new String[5];
-        for (i = 0; i < 5; i++) {
-            color[i] = strArray[i * 3 + 1];
-        }
-        HashSet<Integer> hashSetNumber = new HashSet<>();
-        for (i = 0; i < 5; i++) {
-            hashSetNumber.add(number[i]);
-        }
-        HashSet<String> hashSetType = new HashSet<>();
-        for (i = 0; i < 5; i++) {
-            hashSetType.add(color[i]);
-        }
-        if (hashSetNumber.size() == 5) {
-            if ((number[0] - number[4] == 4) && (hashSetType.size() == 1)) {//五个相邻的数字且花色一样——同花顺
-                type = "StraightFlush";
-            } else if (number[0] - number[4] == 4 ) {//五个相邻数字——顺子
-                type = "Straight";
-            } else if (hashSetType.size() == 1) {//同一花色——同花
-                type = "Flush";
+        if (isDiff(str, 5)) {
+            if (isStraight(str) && isFlush(str)) {//五个相邻的数字且花色一样——同花顺
+                return  "StraightFlush";
+            } else if (isStraight(str)) {//五个相邻数字——顺子
+                return  "Straight";
+            } else if (isFlush(str)) {//同一花色——同花
+                return  "Flush";
             } else {//五个不相邻的数字——散牌
-                type = "HighCard";
+                return  "HighCard";
             }
-        } else if (hashSetNumber.size() == 4) {//一对相同，其余三个数字不同——对子
-            type = "OnePair";
-        } else if (hashSetNumber.size() == 3) {
-            if ((number[0] == number[1] && number[2] == number[3]) || (number[1] == number[2] && number[3] == number[4]) || (number[0] == number[1] && number[3] == number[4])) {//两对
-                type = "TwoPair";
+        } else if (isDiff(str, 4)) {//一对相同，其余三个数字不同——对子
+            return  "OnePair";
+        } else if (isDiff(str, 3)) {
+            if (maxCardIs(str, 2)) {//两对
+                return  "TwoPair";
             } else {//三个数字相同，另外两个数字不同——三条
-                type = "ThreeOfAKind";
+                return  "ThreeOfAKind";
             }
         } else {
-            if (number[0] != number[1] || number[3] != number[4]) {//四个数字相同——铁支
-                type = "FourOfAKind";
+            if (maxCardIs(str, 4)) {//四个数字相同——铁支
+                return  "FourOfAKind";
             } else {//三个数字相同，另外两个数字相同——葫芦
-                type = "FullHouse";
+                return  "FullHouse";
             }
         }
-        return type;
+    }
+
+    /**
+     * 相同大小牌最多的张数是 n
+     */
+    private static boolean maxCardIs(String cardList, int i) {
+        LinkedList<String> numberList = Arrays.stream(cardList.split(" "))
+                .map(oneCard -> oneCard.substring(0, 1))
+                .sorted(Comparator.comparingInt(a -> compareNumList.indexOf(a)))
+                .collect(Collectors.toCollection(LinkedList::new));
+        HashMultiset<String> cardCounter = numberList.stream().collect(Collectors.toCollection(HashMultiset::create));
+
+        return numberList.stream().mapToInt(cardCounter::count).max().orElse(0) == i;
+    }
+
+    /**
+     * 有几张不同的牌
+     */
+    private static boolean isDiff(String card, int size) {
+        Set<String> numberSet = Arrays.stream(card.split(" "))
+                .map(oneCard -> oneCard.substring(0, 1))
+                .collect(Collectors.toSet());
+        return numberSet.size() == size;
+    }
+
+    /**
+     * 同花的
+     */
+    private static boolean isFlush(String cardList) {
+        Set<String> colorSet = Arrays.stream(cardList.split(" "))
+                .map(oneCard -> oneCard.substring(1))
+                .collect(Collectors.toSet());
+        return colorSet.size() == 1;
+    }
+
+    /**
+     * 连续的
+     */
+    private static boolean isStraight(String cardList) {
+        LinkedList<String> numberList = Arrays.stream(cardList.split(" "))
+                .map(oneCard -> oneCard.substring(0, 1))
+                .sorted(Comparator.comparingInt(a -> compareNumList.indexOf(a)))
+                .collect(Collectors.toCollection(LinkedList::new));
+        return map2Int(numberList.getLast()) - map2Int(numberList.getFirst()) == 4;
+    }
+
+    private static int map2Int(String card) {
+        return compareNumList.indexOf(card) + 2;
     }
 
     private static int[] strNumber(String str) {//数字转化并将其从大到小排序
