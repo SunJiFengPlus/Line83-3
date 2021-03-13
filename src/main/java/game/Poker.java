@@ -10,8 +10,11 @@ public class Poker {
     public String compairResult(String player1, String player2) {
         String winResult = "";
 
-        String player1Type = judgeType(player1);
-        String player2Type = judgeType(player2);
+        AbstractCard player1Card = AbstractCard.of(player1, "player1");
+        AbstractCard player2Card = AbstractCard.of(player2, "player2");
+
+        String player1Type = player1Card.getType();
+        String player2Type = player2Card.getType();
         String[] type = {"StraightFlush", "FourOfAKind", "FullHouse", "Flush", "Straight", "ThreeOfAKind", "TwoPair", "OnePair", "HighCard"};
         int[] player1Number = strNumber(player1);
         int[] player2Number = strNumber(player2);
