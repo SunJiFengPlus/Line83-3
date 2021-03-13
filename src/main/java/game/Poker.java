@@ -16,8 +16,8 @@ public class Poker {
         String player1Type = player1Card.getType();
         String player2Type = player2Card.getType();
         String[] type = {"StraightFlush", "FourOfAKind", "FullHouse", "Flush", "Straight", "ThreeOfAKind", "TwoPair", "OnePair", "HighCard"};
-        int[] player1Number = strNumber(player1);
-        int[] player2Number = strNumber(player2);
+        int[] player1Number = player1Card.getCardNum();
+        int[] player2Number = player2Card.getCardNum();
         int player1Index = judgeIndex(player1Type);
         int player2Index = judgeIndex(player2Type);
         int[] player1ArraySort = arraySort(player1Number);

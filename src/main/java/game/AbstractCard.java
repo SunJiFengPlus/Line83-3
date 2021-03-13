@@ -16,28 +16,31 @@ public abstract class AbstractCard {
     private String playerName;
     private String cardList;
     private String type;
+    private int[] cardNum;
 
     public static AbstractCard of(String card, String name) {
         String judgeType = judgeType(card);
+        int[] cardNumList = strNumber(card);
+
         switch (judgeType) {
             case "StraightFlush":
-                return new StraightFlush(card, name, "StraightFlush");
+                return new StraightFlush(card, name, "StraightFlush", cardNumList);
             case "Straight":
-                return new Straight(card, name, "Straight");
+                return new Straight(card, name, "Straight", cardNumList);
             case "Flush":
-                return new Flush(card, name, "Flush");
+                return new Flush(card, name, "Flush", cardNumList);
             case "HighCard":
-                return new HighCard(card, name, "HighCard");
+                return new HighCard(card, name, "HighCard", cardNumList);
             case "OnePair":
-                return new OnePair(card, name, "OnePair");
+                return new OnePair(card, name, "OnePair", cardNumList);
             case "TwoPair":
-                return new TwoPair(card, name, "TwoPair");
+                return new TwoPair(card, name, "TwoPair", cardNumList);
             case "ThreeOfAKind":
-                return new ThreeOfAKind(card, name, "ThreeOfAKind");
+                return new ThreeOfAKind(card, name, "ThreeOfAKind", cardNumList);
             case "FourOfAKind":
-                return new FourOfAKind(card, name, "FourOfAKind");
+                return new FourOfAKind(card, name, "FourOfAKind", cardNumList);
             case "FullHouse":
-                return new FullHouse(card, name, "FullHouse");
+                return new FullHouse(card, name, "FullHouse", cardNumList);
         }
         throw new IllegalArgumentException(card);
     }

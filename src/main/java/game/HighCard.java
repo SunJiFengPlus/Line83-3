@@ -5,7 +5,7 @@ package game;
  * @since 2021/3/13
  */
 public class HighCard extends AbstractCard {
-    public HighCard(String card, String name, String highCard) {
-        super(card, name, highCard);
+    public HighCard(String card, String name, String highCard, int[] cardNumList) {
+        super(card, name, highCard, cardNumList);
     }
 }
