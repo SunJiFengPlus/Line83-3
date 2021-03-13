@@ -271,19 +271,7 @@ public abstract class AbstractCard {
             } else if (this.getTypeIndex() == 2) {//葫芦
                 winResult = doCompareTo(anotherCard);
             } else if (this.getTypeIndex() == 3) {//同花
-                for (int i = 0; i < 5; i++) {
-                    if (this.getCardNum()[i] < anotherCard.getCardNum()[i]) {
-                        String sig = map2Card(anotherCard.getCardNum()[i]);
-                        winResult = "player2 wins - high card:" + sig;
-                        break;
-                    } else if (this.getCardNum()[i] > anotherCard.getCardNum()[i]) {
-                        String sig = map2Card(this.getCardNum()[i]);
-                        winResult = "player1 wins - high card:" + sig;
-                        break;
-                    } else {
-                        winResult = "tie";
-                    }
-                }
+                winResult = doCompareTo(anotherCard);
             } else if (this.getTypeIndex() == 4) {//顺子
                 if (this.getCardNum()[0] < anotherCard.getCardNum()[0]) {
                     String sig = map2Card(anotherCard.getCardNum()[0]);
