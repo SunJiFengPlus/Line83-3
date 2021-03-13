@@ -15,21 +15,21 @@ public class TwoPair extends AbstractCard {
         for (int i = 0; i < 2; i++) {
             if (this.noOrRepeatNumber(0)[i] < anotherCard.noOrRepeatNumber(0)[i]) {
                 String sig = map2Card(anotherCard.noOrRepeatNumber(0)[i]);
-                winResult = anotherCard.getPlayerName() +" wins - high card:" + sig;
+                winResult = anotherCard.getPlayerName() + WINS_HIGH_CARD + sig;
                 break;
             } else if (this.noOrRepeatNumber(0)[i] > anotherCard.noOrRepeatNumber(0)[i]) {
                 String sig = map2Card(this.noOrRepeatNumber(0)[i]);
-                winResult = this.getPlayerName() +" wins - high card:" + sig;
+                winResult = this.getPlayerName() +WINS_HIGH_CARD + sig;
                 break;
             }
         }
         if (winResult.equals("")) {
             if (this.noOrRepeatNumber(1)[0] < anotherCard.noOrRepeatNumber(1)[0]) {
                 String sig = map2Card(anotherCard.noOrRepeatNumber(1)[0]);
-                winResult = anotherCard.getPlayerName() + " wins - high card:" + sig;
+                winResult = anotherCard.getPlayerName() + WINS_HIGH_CARD + sig;
             } else if (this.noOrRepeatNumber(1)[0] > anotherCard.noOrRepeatNumber(1)[0]) {
                 String sig = map2Card(this.noOrRepeatNumber(1)[0]);
-                winResult = this.getPlayerName() + " wins - high card:" + sig;
+                winResult = this.getPlayerName() + WINS_HIGH_CARD + sig;
             } else {
                 winResult = "tie";
             }

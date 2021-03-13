@@ -13,10 +13,10 @@ public class Straight extends AbstractCard {
     public String doCompareTo(AbstractCard anotherCard) {
         if (this.getCardNum()[0] < anotherCard.getCardNum()[0]) {
             String sig = map2Card(anotherCard.getCardNum()[0]);
-            return anotherCard.getPlayerName() +" wins - high card:" + sig;
+            return anotherCard.getPlayerName() +WINS_HIGH_CARD + sig;
         } else if (this.getCardNum()[0] > anotherCard.getCardNum()[0]) {
             String sig = map2Card(this.getCardNum()[0]);
-            return this.getPlayerName() + " wins - high card:" + sig;
+            return this.getPlayerName() + WINS_HIGH_CARD + sig;
         } else {
             return  "tie";
         }

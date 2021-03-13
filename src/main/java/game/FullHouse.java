@@ -13,10 +13,10 @@ public class FullHouse extends AbstractCard {
     public String doCompareTo(AbstractCard anotherCard) {
         if (this.sort()[0] < anotherCard.sort()[0]) {
             String sig = map2Card(anotherCard.sort()[0]);
-            return anotherCard.getPlayerName() + " wins - high card:" + sig;
+            return anotherCard.getPlayerName() + WINS_HIGH_CARD + sig;
         } else {
             String sig = map2Card(this.sort()[0]);
-            return this.getPlayerName() + " wins - high card:" + sig;
+            return this.getPlayerName() + WINS_HIGH_CARD + sig;
         }
     }
 }

@@ -24,7 +24,6 @@ public abstract class AbstractCard {
     private String playerName;
     private String type;
     private int[] cardNum;
-
     public AbstractCard(String cardList, String playerName, String type, int[] cardNum) {
         this.cardList = cardList;
         this.playerName = playerName;
@@ -36,6 +35,7 @@ public abstract class AbstractCard {
      * 卡牌点数, 从小到大
      */
     private static List<String> compareNumList = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
+    public static final String WINS_HIGH_CARD = " wins - high card:";
 
     public static AbstractCard of(String card, String name) {
         int[] cardNumList = strNumber(card);
