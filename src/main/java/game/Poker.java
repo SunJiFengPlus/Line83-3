@@ -99,7 +99,7 @@ public class Poker {
                         break;
                     }
                 }
-                if (winResult == "") {
+                if (winResult.equals("")) {
                     if (player1NoRepeat[0] < player2NoRepeat[0]) {
                         String sig = intNumber(player2NoRepeat[0]);
                         winResult = "player2 wins - high card:" + sig;
@@ -157,21 +157,12 @@ public class Poker {
     }
 
     private int[] arraySort(int[] number) {
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int i = 0; i < number.length; i++) {
-            if (map.get(number[i]) != null) {
-                map.put(number[i], map.get(number[i]) + 1);
-            } else {
-                map.put(number[i], 1);
-            }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int j : number) {
+            map.merge(j, 1, Integer::sum);
         }
-        List<Map.Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer, Integer>>();
-        list.addAll(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
-            public int compare(Map.Entry<Integer, Integer> arg0, Map.Entry<Integer, Integer> arg1) {
-                return arg1.getValue().compareTo(arg0.getValue());
-            }
-        });
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((arg0, arg1) -> arg1.getValue().compareTo(arg0.getValue()));
         int[] arrayresult = new int[list.size()];
         int i = 0;
         for (Map.Entry<Integer, Integer> entry : list) {
@@ -182,21 +173,12 @@ public class Poker {
     }
 
     private int[] noOrRepeatNumber(int[] number, int flag) {//先获得数组中每个元素出现的次数，然后再进行计算出现次数大于1的和出现次数等于1的
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (int i = 0; i < number.length; i++) {
-            if (map.get(number[i]) != null) {
-                map.put(number[i], map.get(number[i]) + 1);
-            } else {
-                map.put(number[i], 1);
-            }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int j : number) {
+            map.merge(j, 1, Integer::sum);
         }
-        List<Map.Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer, Integer>>();
-        list.addAll(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
-            public int compare(Map.Entry<Integer, Integer> arg0, Map.Entry<Integer, Integer> arg1) {
-                return arg1.getValue().compareTo(arg0.getValue());
-            }
-        });
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((arg0, arg1) -> arg1.getValue().compareTo(arg0.getValue()));
         int[] repeatnumber = new int[list.size()];
         int[] norepeatnumber = new int[list.size()];
         int i = 0;
@@ -215,7 +197,7 @@ public class Poker {
                 }
             }
         }
-        HashSet<Integer> hashSet = new HashSet<Integer>();
+        HashSet<Integer> hashSet = new HashSet<>();
         if (flag == 0) {
             for (i = 0; i < repeatnumber.length; i++) {
                 hashSet.add(repeatnumber[i]);
@@ -228,9 +210,8 @@ public class Poker {
         hashSet.remove(0);
         int[] result = new int[hashSet.size()];
         i = 0;
-        Iterator<Integer> iterator = hashSet.iterator();
-        while (iterator.hasNext()) {
-            result[i] = iterator.next();
+        for (Integer integer : hashSet) {
+            result[i] = integer;
             i++;
         }
         int[] reResult = new int[result.length];
@@ -252,7 +233,7 @@ public class Poker {
     }
 
     private String judgeType(String str) {//判断是什么牌
-        String type = "";
+        String type;
         String[] strArray = str.split("");
         int[] number = strNumber(str);
         int i;
@@ -260,11 +241,11 @@ public class Poker {
         for (i = 0; i < 5; i++) {
             color[i] = strArray[i * 3 + 1];
         }
-        HashSet<Integer> hashSetNumber = new HashSet<Integer>();
+        HashSet<Integer> hashSetNumber = new HashSet<>();
         for (i = 0; i < 5; i++) {
             hashSetNumber.add(number[i]);
         }
-        HashSet<String> hashSetType = new HashSet<String>();
+        HashSet<String> hashSetType = new HashSet<>();
         for (i = 0; i < 5; i++) {
             hashSetType.add(color[i]);
         }
@@ -319,7 +300,7 @@ public class Poker {
                     number[i] = 14;
                     break;
                 default:
-                    number[i] = Integer.valueOf(c);
+                    number[i] = Integer.parseInt(c);
                     break;
             }
         }
