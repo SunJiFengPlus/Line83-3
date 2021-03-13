@@ -18,8 +18,8 @@ public class Poker {
         int[] player2Number = player2Card.getCardNum();
         int player1Index = player1Card.getTypeIndex();
         int player2Index = player2Card.getTypeIndex();
-        int[] player1ArraySort = arraySort(player1Number);
-        int[] player2ArraySort = arraySort(player2Number);
+        int[] player1ArraySort = player1Card.sort();
+        int[] player2ArraySort = player2Card.sort();
         int[] player1Repeat = noOrRepeatNumber(player1Number, 0);
         int[] player2Repeat = noOrRepeatNumber(player2Number, 0);
         int[] player1NoRepeat = noOrRepeatNumber(player1Number, 1);
@@ -155,22 +155,6 @@ public class Poker {
     private String intNumber(int i) {
         String[] strNumber = {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
         return strNumber[i - 2];
-    }
-
-    private int[] arraySort(int[] number) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int j : number) {
-            map.merge(j, 1, Integer::sum);
-        }
-        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
-        list.sort((arg0, arg1) -> arg1.getValue().compareTo(arg0.getValue()));
-        int[] arrayresult = new int[list.size()];
-        int i = 0;
-        for (Map.Entry<Integer, Integer> entry : list) {
-            arrayresult[i] = entry.getKey();
-            i++;
-        }
-        return arrayresult;
     }
 
     private int[] noOrRepeatNumber(int[] number, int flag) {//先获得数组中每个元素出现的次数，然后再进行计算出现次数大于1的和出现次数等于1的

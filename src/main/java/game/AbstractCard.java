@@ -3,8 +3,12 @@ package game;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 孙继峰
@@ -135,5 +139,21 @@ public abstract class AbstractCard {
             }
         }
         return index;
+    }
+
+    public int[] sort() {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int j : cardNum) {
+            map.merge(j, 1, Integer::sum);
+        }
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((arg0, arg1) -> arg1.getValue().compareTo(arg0.getValue()));
+        int[] arrayresult = new int[list.size()];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : list) {
+            arrayresult[i] = entry.getKey();
+            i++;
+        }
+        return arrayresult;
     }
 }
