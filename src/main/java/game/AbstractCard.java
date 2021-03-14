@@ -39,29 +39,29 @@ public abstract class AbstractCard {
 
     public static AbstractCard of(String card, String name) {
         int[] cardNumList = strNumber(card);
-        //判断是什么牌
+        
         if (isDiff(card, 5)) {
-            if (isStraight(card) && isFlush(card)) {//五个相邻的数字且花色一样——同花顺
+            if (isStraight(card) && isFlush(card)) {
                 return new StraightFlush(card, name, "StraightFlush", cardNumList);
-            } else if (isStraight(card)) {//五个相邻数字——顺子
+            } else if (isStraight(card)) {
                 return new Straight(card, name, "Straight", cardNumList);
-            } else if (isFlush(card)) {//同一花色——同花
+            } else if (isFlush(card)) {
                 return new Flush(card, name, "Flush", cardNumList);
-            } else {//五个不相邻的数字——散牌
+            } else {
                 return new HighCard(card, name, "HighCard", cardNumList);
             }
-        } else if (isDiff(card, 4)) {//一对相同，其余三个数字不同——对子
+        } else if (isDiff(card, 4)) {
             return new OnePair(card, name, "OnePair", cardNumList);
         } else if (isDiff(card, 3)) {
-            if (maxCardIs(card, 2)) {//两对
+            if (maxCardIs(card, 2)) {
                 return new TwoPair(card, name, "TwoPair", cardNumList);
-            } else {//三个数字相同，另外两个数字不同——三条
+            } else {
                 return new ThreeOfAKind(card, name, "ThreeOfAKind", cardNumList);
             }
         } else {
-            if (maxCardIs(card, 4)) {//四个数字相同——铁支
+            if (maxCardIs(card, 4)) {
                 return new FourOfAKind(card, name, "FourOfAKind", cardNumList);
-            } else {//三个数字相同，另外两个数字相同——葫芦
+            } else {
                 return new FullHouse(card, name, "FullHouse", cardNumList);
             }
         }
@@ -119,7 +119,7 @@ public abstract class AbstractCard {
         return compareNumList.get(i - 2);
     }
 
-    private static int[] strNumber(String str) {//数字转化并将其从大到小排序
+    private static int[] strNumber(String str) {
         return Arrays.stream(str.split(" "))
                 .map(card -> card.substring(0, 1))
                 .map(AbstractCard::map2Int)
@@ -155,7 +155,7 @@ public abstract class AbstractCard {
         return arrayresult;
     }
 
-    public int[] noOrRepeatNumber(int flag) {//先获得数组中每个元素出现的次数，然后再进行计算出现次数大于1的和出现次数等于1的
+    public int[] noOrRepeatNumber(int flag) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int j : cardNum) {
             map.merge(j, 1, Integer::sum);
